@@ -1,0 +1,23 @@
+package com.yaalis.savefarmer.savefarmer.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.yaalis.savefarmer.savefarmer.bean.FarmerBean;
+
+@Service
+public class AppService {
+	List<FarmerBean> farmerDetails = new ArrayList<>();
+	
+	@Autowired
+	Myrepository repo;
+	
+	public List<FarmerBean> fetchFarmerDetails(){
+		
+		repo.findAll().forEach(farmerDetails::add);
+		return farmerDetails;
+	}
+}

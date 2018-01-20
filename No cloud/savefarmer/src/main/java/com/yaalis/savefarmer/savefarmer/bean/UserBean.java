@@ -1,0 +1,70 @@
+package com.yaalis.savefarmer.savefarmer.bean;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "usertransaction")
+public class UserBean {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long transactionId;
+	private String emailId;
+	private String name;
+	private double amountPaid;
+	private String farmerId;
+	private String image;
+	
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public Long getTransactionId() {
+		return transactionId;
+	}
+
+	public void setTransactionId(Long transactionId) {
+		this.transactionId = transactionId;
+	}
+
+	public String getFarmerId() {
+		return farmerId;
+	}
+
+	public void setFarmerId(String farmerId) {
+		this.farmerId = farmerId;
+	}
+
+	public String getEmailId() {
+		return emailId;
+	}
+
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public double getAmountPaid() {
+		return amountPaid;
+	}
+
+	public void setAmountPaid(double amountPaid) {
+		this.amountPaid = amountPaid;
+	}
+
+}

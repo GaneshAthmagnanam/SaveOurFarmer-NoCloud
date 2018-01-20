@@ -1,0 +1,67 @@
+package com.yaalis.savefarmer.savefarmer.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.yaalis.savefarmer.savefarmer.bean.FarmerBean;
+import com.yaalis.savefarmer.savefarmer.bean.FarmerDetails;
+import com.yaalis.savefarmer.savefarmer.bean.UserBean;
+
+@Service
+public class AppService {
+
+	@Autowired
+	MyrepositoryFarmerBean repo;
+
+	public List<FarmerBean> fetchFarmerDetails() {
+		List<FarmerBean> farmerDetails = new ArrayList<>();
+		repo.findAll().forEach(farmerDetails::add);
+		return farmerDetails;
+	}
+
+	@Autowired
+	MyrepositoryFarmerDetails repoFarmerDetails;
+
+	public List<FarmerDetails> fetchFarmerIndividualDetails(String farmerID) {
+		List<FarmerDetails> farmerDetails = new ArrayList<>();
+		FarmerDetails details = new FarmerDetails();
+		try{
+		details.setId(repoFarmerDetails.findOne(farmerID).getId());
+		details.setAccountNumber(repoFarmerDetails.findOne(farmerID).getAccountNumber());
+		details.setBankDetails(repoFarmerDetails.findOne(farmerID).getBankDetails());
+		details.setFarmerName(repoFarmerDetails.findOne(farmerID).getFarmerName());
+		details.setOtherDetails(repoFarmerDetails.findOne(farmerID).getOtherDetails());
+		details.setPhoneNumber(repoFarmerDetails.findOne(farmerID).getPhoneNumber());
+		details.setReason(repoFarmerDetails.findOne(farmerID).getReason());
+		farmerDetails.add(details);
+		}
+		catch(Exception e){
+			e.getMessage();
+		}
+		return farmerDetails;
+	}
+	
+	@Autowired
+	MyrepositoryUserDonated user;
+	
+	public String saveDonatedUser(UserBean bean){
+		boolean flag;
+		try{
+			user.save(bean);
+			flag=true;
+		}
+		catch(Exception e){
+			flag=false;
+		}
+		if(flag){
+			return "Transaction Completed";
+		}
+		else{
+			return "Transaction Completed";
+		}
+	}
+	
+}

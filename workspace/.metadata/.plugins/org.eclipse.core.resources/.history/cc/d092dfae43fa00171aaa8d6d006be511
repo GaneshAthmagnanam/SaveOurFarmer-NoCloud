@@ -1,0 +1,5 @@
+package com.yaalis.savefarmer.savefarmer.service;
+
+public interface MyrepositoryFarmerDetails {
+
+}

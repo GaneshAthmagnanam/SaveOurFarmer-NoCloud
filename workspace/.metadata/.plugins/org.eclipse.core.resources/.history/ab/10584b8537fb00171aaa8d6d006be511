@@ -1,0 +1,82 @@
+package com.yaalis.savefarmer.savefarmer.controller;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.validation.Valid;
+import javax.websocket.server.PathParam;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.yaalis.savefarmer.savefarmer.bean.FarmerBean;
+import com.yaalis.savefarmer.savefarmer.bean.UserBean;
+import com.yaalis.savefarmer.savefarmer.service.AppService;
+
+@RestController
+public class AppController {
+
+	@Autowired
+	AppService service;
+
+	@RequestMapping("/ourfarmers")
+	public Map<String, List<FarmerBean>> farmerDetails() {
+
+		List<FarmerBean> farmerDetails = new ArrayList<>();
+		Map<String, List<FarmerBean>> mappedFarmerDetails = new LinkedHashMap<>();
+		try {
+			farmerDetails = service.fetchFarmerDetails();
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		mappedFarmerDetails.put("farmerDetails", farmerDetails);
+		return mappedFarmerDetails;
+	}
+
+	@RequestMapping("/ourfarmers/{farmerID}")
+	public Map<String, List<FarmerBean>> farmerIndividualDetails(@PathVariable("farmerID") String farmerId) {
+		List<FarmerBean> farmerIndividualDetailsList = new ArrayList<>();
+		Map<String, List<FarmerBean>> mappedFarmerIndividualDetails = new LinkedHashMap<>();
+		try {
+			farmerIndividualDetailsList = service.fetchFarmerIndividualDetails(farmerId);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		mappedFarmerIndividualDetails.put("farmerindividualdetails", farmerIndividualDetailsList);
+		return mappedFarmerIndividualDetails;
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/ourfarmers")
+	public String createDonatedUser(@Valid @RequestBody UserBean object) {
+		String transactionMessage = null;
+		try {
+			transactionMessage = service.saveDonatedUser(object);
+
+		} catch (Exception e) {
+			e.getMessage();
+		}
+
+		return transactionMessage;
+	}
+	@RequestMapping("/ourfarmers/contributors/{identifier}")
+	public Map<String, List<UserBean>> contributorsList(@PathParam("identifier") String farmerId) {
+
+		List<UserBean> contributors = new ArrayList<>();
+		Map<String, List<UserBean>> mappedFarmerDetails = new LinkedHashMap<>();
+		try {
+			contributors = service.fetchContributors(farmerId);
+		} catch (Exception e) {
+			e.getMessage();
+			System.out.println(e.getStackTrace()+e.getMessage());
+		}
+		mappedFarmerDetails.put("specific contibutors", contributors);
+		return mappedFarmerDetails;
+	}
+
+}

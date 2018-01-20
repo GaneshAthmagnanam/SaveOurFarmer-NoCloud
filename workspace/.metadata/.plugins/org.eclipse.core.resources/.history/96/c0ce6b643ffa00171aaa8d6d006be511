@@ -1,0 +1,5 @@
+package com.yaalis.savefarmer.savefarmer.controller;
+
+public class AppController {
+
+}

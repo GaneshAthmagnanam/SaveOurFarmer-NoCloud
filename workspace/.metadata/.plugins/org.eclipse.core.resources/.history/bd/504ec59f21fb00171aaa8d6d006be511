@@ -1,0 +1,7 @@
+package com.yaalis.savefarmer.savefarmer.service;
+
+import com.yaalis.savefarmer.savefarmer.bean.FarmerBean;
+
+public class FarmerBeanChild extends FarmerBean{
+
+}

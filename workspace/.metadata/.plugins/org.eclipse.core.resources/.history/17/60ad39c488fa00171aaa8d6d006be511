@@ -1,0 +1,5 @@
+package com.yaalis.savefarmer.savefarmer.bean;
+
+public class UserBean {
+
+}

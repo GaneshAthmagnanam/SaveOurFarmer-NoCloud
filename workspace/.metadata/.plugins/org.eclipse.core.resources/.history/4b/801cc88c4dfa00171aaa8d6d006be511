@@ -1,0 +1,42 @@
+package com.yaalis.savefarmer.savefarmer.controller;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.yaalis.savefarmer.savefarmer.bean.FarmerBean;
+import com.yaalis.savefarmer.savefarmer.bean.FarmerDetails;
+import com.yaalis.savefarmer.savefarmer.repository.FarmerDatabase;
+import com.yaalis.savefarmer.savefarmer.service.AppService;
+
+@RestController
+public class AppController {
+	
+	
+	@Autowired
+	AppService service;
+	
+	@RequestMapping("/ourfarmers")
+	public Map<String,List<FarmerBean>> farmerDetails(){
+		
+		List<FarmerBean> farmerDetails=new ArrayList<>();
+		Map<String,List<FarmerBean>> mappedFarmerDetails=new LinkedHashMap<>();
+		farmerDetails=service.fetchFarmerDetails();
+		mappedFarmerDetails.put("farmerDetails", farmerDetails);
+		return mappedFarmerDetails;
+	}
+	@RequestMapping("/ourfarmers/{farmerID}")
+	public Map<String,List<FarmerDetails>> farmerIndividualDetails(@PathVariable("farmerID") String farmerId ){
+		List<FarmerDetails> farmerIndividualDetailsList=new ArrayList<>();
+		Map<String,List<FarmerDetails>> mappedFarmerIndividualDetails=new LinkedHashMap<>();
+		farmerIndividualDetailsList=service.fetchFarmerIndividualDetails(farmerId);
+		mappedFarmerIndividualDetails.put("farmerindividualdetails", farmerIndividualDetailsList);
+		return mappedFarmerIndividualDetails;
+	}
+}
